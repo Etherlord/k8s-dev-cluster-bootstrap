@@ -1,0 +1,10 @@
+---
+-   name: Prepare node
+    hosts: node
+    remote_user: root
+    roles:
+        - common-dependencies
+        - add-user
+        - ssh-key
+        - timezone
+        - sshd-reconfigure

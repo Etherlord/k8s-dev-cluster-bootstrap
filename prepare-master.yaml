@@ -1,0 +1,10 @@
+---
+-   name: Prepare master
+    hosts: master
+    remote_user: root
+    roles:
+        - common-dependencies
+        - add-user
+        - ssh-key
+        - timezone
+        - sshd-reconfigure
