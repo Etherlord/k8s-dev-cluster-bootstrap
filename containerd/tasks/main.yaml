@@ -1,0 +1,46 @@
+---
+-   name: Add GPG key
+    apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
+        validate_certs: no
+
+-   name: Verify fingerprint
+    apt_key:
+        id: 0EBFCD88
+        state: present
+
+-   name: Get DEB architecture
+    shell: dpkg --print-architecture
+    register: deb_architecture
+    changed_when: false
+
+-   name: Set up the repository
+    apt_repository:
+        repo: deb [arch={{ deb_architecture.stdout }}] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable
+        state: present
+        filename: containerd
+        update_cache: yes
+
+-   name: Install Containerd
+    apt:
+        name: containerd.io
+        state: present
+        update_cache: yes
+    notify: Start containerd on boot
+
+-   name: Enable CRI
+    lineinfile:
+        path: /etc/containerd/config.toml
+        search_string: 'disabled_plugins = ["cri"]'
+        line: "disabled_plugins = []"
+
+-   name: Configure Containerd for k8s
+    lineinfile:
+        path: /etc/containerd/config.toml
+        state: present
+        line: "{{ item }}"
+    with_items:
+        - '[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]'
+        - 'SystemdCgroup = true'
+    notify: Restart containerd after configuration

@@ -1,0 +1,11 @@
+---
+-   name: Start containerd on boot
+    systemd:
+        name: containerd
+        state: started
+        enabled: yes
+-   name: Restart containerd after configuration
+    systemd:
+        name: containerd
+        state: restarted
+        enabled: yes

@@ -7,4 +7,5 @@
         - add-user
         - ssh-key
         - timezone
+        - containerd
         - sshd-reconfigure
