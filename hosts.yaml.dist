@@ -1,0 +1,23 @@
+all:
+    children:
+        master:
+            hosts:
+                server:
+                    ansible_connection: ssh
+                    ansible_user: root
+                    ansible_password: pass
+                    ansible_host: 0.0.0.0
+                    ansible_port: 22
+        node:
+            hosts:
+                server:
+                    ansible_connection: ssh
+                    ansible_user: root
+                    ansible_password: pass
+                    ansible_host: 0.0.0.0
+                    ansible_port: 22
+    vars:
+        username: user
+        ssh_public_key_path: /home/user/.ssh/id_rsa.pub
+        ssh_port: 2222
+        timezone: Europe/Moscow
