@@ -1,0 +1,51 @@
+---
+-   name: Add GPG key
+    apt_key:
+        url: https://pkgs.k8s.io/core:/stable:/v{{ k8s_version }}/deb/Release.key
+        state: present
+        validate_certs: no
+
+-   name: Verify fingerprint
+    apt_key:
+        id: "{{ k8s_release_key_fingerprint }}"
+        state: present
+
+-   name: Set up the repository
+    apt_repository:
+        repo: deb https://pkgs.k8s.io/core:/stable:/v{{ k8s_version }}/deb/ /
+        state: present
+        filename: k8s
+        update_cache: yes
+
+-   name: Install kubelet
+    apt:
+        name: kubelet
+        state: present
+        update_cache: yes
+
+-   name: Hold kubelet
+    dpkg_selections:
+        name: kubelet
+        selection: hold
+
+-   name: Install kubeadm
+    apt:
+        name: kubeadm
+        state: present
+        update_cache: yes
+
+-   name: Hold kubeadm
+    dpkg_selections:
+        name: kubeadm
+        selection: hold
+
+-   name: Install kubectl
+    apt:
+        name: kubectl
+        state: present
+        update_cache: yes
+
+-   name: Hold kubectl
+    dpkg_selections:
+        name: kubectl
+        selection: hold

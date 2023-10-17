@@ -9,4 +9,5 @@
         - timezone
         - configure-system-for-k8s
         - containerd
+        - k8s-binaries
         - sshd-reconfigure
