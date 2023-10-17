@@ -7,5 +7,6 @@
         - add-user
         - ssh-key
         - timezone
+        - configure-system-for-k8s
         - containerd
         - sshd-reconfigure
