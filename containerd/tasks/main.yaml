@@ -29,18 +29,23 @@
         update_cache: yes
     notify: Start containerd on boot
 
--   name: Enable CRI
-    lineinfile:
-        path: /etc/containerd/config.toml
-        search_string: 'disabled_plugins = ["cri"]'
-        line: "disabled_plugins = []"
+-   name: Check if containerd_configured.txt file exists
+    stat:
+        path: "/home/{{ username }}/containerd_configured.txt"
+    register: containerd_configured_file_check
+
+-   name: Reset containerd config to default
+    shell: sudo containerd config default > /etc/containerd/config.toml
+    when: not containerd_configured_file_check.stat.exists
 
 -   name: Configure Containerd for k8s
     lineinfile:
         path: /etc/containerd/config.toml
-        state: present
-        line: "{{ item }}"
-    with_items:
-        - '[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]'
-        - 'SystemdCgroup = true'
+        search_string: 'SystemdCgroup = false'
+        line: 'SystemdCgroup = true'
+    when: not containerd_configured_file_check.stat.exists
     notify: Restart containerd after configuration
+
+-   name: Create containerd_configured.txt file
+    shell: "touch /home/{{ username }}/containerd_configured.txt"
+    when: not containerd_configured_file_check.stat.exists

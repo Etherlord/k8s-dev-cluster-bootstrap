@@ -7,7 +7,8 @@
         - add-user
         - ssh-key
         - timezone
-        - configure-system-for-k8s
+        - k8s-prepare-system
         - containerd
         - k8s-binaries
+        - k8s-node-join
         - sshd-reconfigure

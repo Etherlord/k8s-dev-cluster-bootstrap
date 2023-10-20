@@ -1,0 +1,20 @@
+---
+-   name: Check if cluster_initialized.txt file exists
+    stat:
+        path: "/home/{{ username }}/cluster_initialized.txt"
+    register: cluster_init_file_check
+
+-   name: Copy join command from ansible host to the worker node.
+    copy:
+          src: /tmp/kubernetes_join_command
+          dest: /tmp/kubernetes_join_command
+          mode: 0777
+    when: not cluster_init_file_check.stat.exists
+
+-   name: Join the Worker node to the cluster
+    command: sh /tmp/kubernetes_join_command
+    when: not cluster_init_file_check.stat.exists
+
+-   name: Create cluster_initialized.txt file
+    shell: "touch /home/{{ username }}/cluster_initialized.txt"
+    when: not cluster_init_file_check.stat.exists

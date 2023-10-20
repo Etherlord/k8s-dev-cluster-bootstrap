@@ -23,3 +23,4 @@ all:
         timezone: Europe/Moscow
         k8s_version: 1.28
         k8s_release_key_fingerprint: FFFFFFFF
+        cilium_version: 1.14.3
