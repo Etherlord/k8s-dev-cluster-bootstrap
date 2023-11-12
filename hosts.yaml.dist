@@ -22,5 +22,8 @@ all:
         ssh_port: 2222
         timezone: Europe/Moscow
         k8s_version: 1.28
-        k8s_release_key_fingerprint: FFFFFFFF
+        k8s_release_key_fingerprint: 9A296436
         cilium_version: 1.14.3
+        metallb_version: 0.13.12
+        metallb_ip_address_pool: 192.168.0.205-192.168.0.254
+        ingress_nginx_version: 1.9.4

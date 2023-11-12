@@ -1,0 +1,23 @@
+---
+-   name: Check if metallb_configured.txt file exists
+    stat:
+        path: "/home/{{ username }}/metallb_configured.txt"
+    register: metallb_configured_file_check
+
+-   name: Install metallb
+    shell: sudo kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v{{ metallb_version }}/config/manifests/metallb-native.yaml && sleep 60
+    when: not metallb_configured_file_check.stat.exists
+
+-   name: Create metallb config from template
+    template:
+        src: templates/metallb.j2
+        dest: /home/{{ username }}/metallb.yaml
+    when: not metallb_configured_file_check.stat.exists
+
+-   name: Configure metallb
+    shell: sudo kubectl apply -f /home/{{ username }}/metallb.yaml
+    when: not metallb_configured_file_check.stat.exists
+
+-   name: Create metallb_configured.txt file
+    shell: "touch /home/{{ username }}/metallb_configured.txt"
+    when: not metallb_configured_file_check.stat.exists

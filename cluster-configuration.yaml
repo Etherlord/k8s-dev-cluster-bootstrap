@@ -1,0 +1,6 @@
+---
+-   name: Cluster configuration
+    hosts: master
+    remote_user: root
+    roles:
+        - metallb
