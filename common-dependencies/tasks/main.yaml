@@ -8,6 +8,7 @@
             - gnupg
             - sudo
             - ntp
+            - wget
         state: present
         update_cache: yes
     notify: Start ntp on boot
