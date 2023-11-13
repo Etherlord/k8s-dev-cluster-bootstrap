@@ -1,16 +1,16 @@
 all:
     children:
-        master:
+        masters:
             hosts:
-                server:
+                master:
                     ansible_connection: ssh
                     ansible_user: root
                     ansible_password: pass
                     ansible_host: 0.0.0.0
                     ansible_port: 22
-        node:
+        nodes:
             hosts:
-                server:
+                node:
                     ansible_connection: ssh
                     ansible_user: root
                     ansible_password: pass
