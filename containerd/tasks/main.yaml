@@ -46,6 +46,10 @@
     when: not containerd_configured_file_check.stat.exists
     notify: Restart containerd after configuration
 
+-   name: Flush handlers
+    meta: flush_handlers
+    when: not containerd_configured_file_check.stat.exists
+
 -   name: Create containerd_configured.txt file
     shell: "touch /home/{{ username }}/containerd_configured.txt"
     when: not containerd_configured_file_check.stat.exists

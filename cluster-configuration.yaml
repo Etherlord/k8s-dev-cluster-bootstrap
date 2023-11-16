@@ -5,3 +5,4 @@
     roles:
         - metallb
         - ingress-nginx
+        - sshd-reconfigure

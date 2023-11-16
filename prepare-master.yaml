@@ -12,4 +12,3 @@
         - k8s-binaries
         - helm
         - k8s-master-init
-        - sshd-reconfigure
