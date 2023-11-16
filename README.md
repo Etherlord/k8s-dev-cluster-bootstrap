@@ -13,4 +13,4 @@
 4. После завершения работы в `hosts.yaml`:
     * Поменяйте пользователя на того, что указали в переменной `username`
     * Порт ssh на тот, что указали в переменной `ssh_port`
-    * Добавьте строчку `ansible_become: yes` после `ansible_user`
+    * Добавьте строчку `ansible_become: yes` вместо `ansible_password`
