@@ -1,0 +1,23 @@
+---
+-   name: Check if flux_installed.txt file exists
+    stat:
+        path: "/home/{{ username }}/flux_installed.txt"
+    register: flux_installed_file_check
+
+-   name: Install Flux
+    shell: curl -s https://fluxcd.io/install.sh | sudo bash
+    when: not flux_installed_file_check.stat.exists
+
+-   name: Flux bootstrap
+    shell: |
+        GITLAB_TOKEN={{ gitlab_token }} flux bootstrap gitlab --owner={{ gitlab_repository_group }} \
+                              --repository={{ gitlab_repository_project }} \
+                              --path=cluster \
+                              --hostname={{ gitlab_hostname }} \
+                              --components-extra='image-reflector-controller,image-automation-controller' \
+                              --read-write-key
+    when: not flux_installed_file_check.stat.exists
+
+-   name: Create flux_installed.txt file
+    shell: "touch /home/{{ username }}/flux_installed.txt"
+    when: not flux_installed_file_check.stat.exists
