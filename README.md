@@ -20,6 +20,7 @@
 * Создаем Personal Access Token с правами `api, read_repository, write_repository`
 * Заполняем переменные в `hosts.yaml`
 * Выполняем:
+
    ```shell script
    make install-flux
    ```
