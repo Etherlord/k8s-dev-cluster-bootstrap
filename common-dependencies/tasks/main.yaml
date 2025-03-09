@@ -9,6 +9,7 @@
             - sudo
             - ntp
             - wget
+            - curl
         state: present
         update_cache: yes
     notify: Start ntp on boot
